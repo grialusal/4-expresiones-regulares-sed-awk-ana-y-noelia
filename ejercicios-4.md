@@ -47,11 +47,18 @@ Añadimos `-c`para saber el número total de líneas: 57 (casi la mitad que las 
 
 ![Captura de pantalla de 2021-11-07 11-09-01](https://user-images.githubusercontent.com/92091175/140640745-fba9010f-2ccb-4086-b2ca-22bc9ea5a9c8.png)
 
-**4.** Buscamos en la chuleta de expresiones regulares cómo delimitamos las palabras, y encontramos `\b`. Como sabemos que tiene que empezar y terminar por s, y que entre medias puede tener cualquier caracter o caracteres, utilizamos `'\bs[a-zA-Z]*s\b'`. Además, con el flag -o le decimos que nos saque la parte que coincide con el patrón, para luego crear un pipeline con `sort` y así sacar ordenadas todas las palabras que coincidan:
+**4.** Buscamos en la chuleta de expresiones regulares cómo delimitamos las palabras, y encontramos `\b`. Como sabemos que tiene que empezar y terminar por s, y que entre medias puede tener cualquier caracter o caracteres, utilizamos `'\bs[a-z]*s\b'`. Además, con el flag -o le decimos que nos saque la parte que coincide con el patrón, para luego crear un pipeline con `sort` y así sacar ordenadas todas las palabras que coincidan:
 
-`grep -o -E '\bs[a-zA-Z]*s\b' aquella_voluntad.txt | sort`
+`grep -o -E '\bs[a-z]*s\b' aquella_voluntad.txt | sort`
 
-![palabras que empiezan y terminan por s](https://user-images.githubusercontent.com/92091175/140641554-e3b8b45a-3593-4393-91f3-8b979f6a3975.png)
+![palabras que empiezan y terminan por s](https://user-images.githubusercontent.com/92091175/140641738-bb1cb224-775a-4f93-9988-3cf763f99217.png)
+
+**5.** Seguimos utilizando `\b`, y añadimos `[^t]` para indicar que no queremos que nos busque palabras que comiencen por t. Con el flag `-n` nos muestra el número de línea en el que está cada palabra que nos encuentra de acuerdo con el criterio establecido. Así podemos comprobar que nos da el resultado ordenado por filas.
+
+`grep -n -o -E -i '\b[^t][a-z]*s\b' aquella_voluntad.txt`
+
+![palabras que no empiecen por t y acaben por s](https://user-images.githubusercontent.com/92091175/140642850-a79b4040-27a2-4bf2-82d3-cab38ac466df.png)
+
 
 ## Ejercicio 2
 ¿Cuántos gene_ids existen con varios ceros seguidos en los dos gtfs (Humano y Drosophila)?. ¿Cuáles son? ¿Cuántas veces aparece cada uno en el .gtf dado?
