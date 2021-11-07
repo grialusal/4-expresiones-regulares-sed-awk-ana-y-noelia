@@ -21,7 +21,37 @@ Usando el fichero `aquella_voluntad.txt`, identifica usando grep:
 6. Todas las palabras que empiezan y acaban por la misma letra (volver a este punto al acabar toda la lección). 
 
 ### Respuesta ejercicio 1
+**1.** 
+Para buscar las líneas que terminan en "o" utilizaremos el metacaracter $:
 
+`grep -E o$ aquella_voluntad.txt`
+
+Podemos añadir el flag -c para saber el número de líneas que hay y que, en este caso, son 60.
+
+![lineas terminadas en o](https://user-images.githubusercontent.com/92091175/140639718-01cd4c1c-2ad3-4b7f-9757-53f563722d0d.png)
+
+**2.** Al igual que en el caso anterior, utilizaremos $, pero en este caso precedida de [oa]:
+
+`grep -E [oa]$ aquella_voluntad.txt`
+
+![líneas que terminan en oa](https://user-images.githubusercontent.com/92091175/140639876-d6a7e363-89ae-473f-af53-98c49f5e2f6c.png)
+
+Vemos que el número de líneas asciende a 118.
+
+**3.** 
+En awk, NR es el numero de lineas en el fichero a procesar. Si utilizamos % estamos haciendo una operación módulo, es decir, obteniendo el resto de una división. Por tanto, con la orden `'NR%2==0'`, le estamos diciendo a awk que ejecute la acción solo si el número de línea dividido entre dos es igual a cero, esto es, estamos seleccionando las líneas pares. Con un pipe, ejecutamos el mismo filtro del apartado anterior.
+
+`awk 'NR%2==0' aquella_voluntad.txt | grep -E [oa]$`
+
+Añadimos `-c`para saber el número total de líneas: 57 (casi la mitad que las del ejercicio anterior, tiene sentido, ¿no?)
+
+![Captura de pantalla de 2021-11-07 11-09-01](https://user-images.githubusercontent.com/92091175/140640745-fba9010f-2ccb-4086-b2ca-22bc9ea5a9c8.png)
+
+**4.** Buscamos en la chuleta de expresiones regulares cómo delimitamos las palabras, y encontramos `\b`. Como sabemos que tiene que empezar y terminar por s, y que entre medias puede tener cualquier caracter o caracteres, utilizamos `'\bs[a-zA-Z]*s\b'`. Además, con el flag -o le decimos que nos saque la parte que coincide con el patrón, para luego crear un pipeline con `sort` y así sacar ordenadas todas las palabras que coincidan:
+
+`grep -o -E '\bs[a-zA-Z]*s\b' aquella_voluntad.txt | sort`
+
+![palabras que empiezan y terminan por s](https://user-images.githubusercontent.com/92091175/140641554-e3b8b45a-3593-4393-91f3-8b979f6a3975.png)
 
 ## Ejercicio 2
 ¿Cuántos gene_ids existen con varios ceros seguidos en los dos gtfs (Humano y Drosophila)?. ¿Cuáles son? ¿Cuántas veces aparece cada uno en el .gtf dado?
