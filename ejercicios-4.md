@@ -53,11 +53,12 @@ Añadimos `-c`para saber el número total de líneas: 57 (casi la mitad que las 
 
 ![palabras que empiezan y terminan por s](https://user-images.githubusercontent.com/92091175/140641738-bb1cb224-775a-4f93-9988-3cf763f99217.png)
 
-**5.** Seguimos utilizando `\b`, y añadimos `[^t]` para indicar que no queremos que nos busque palabras que comiencen por t. Con el flag `-n` nos muestra el número de línea en el que está cada palabra que nos encuentra de acuerdo con el criterio establecido. Así podemos comprobar que nos da el resultado ordenado por filas.
+**5.** Seguimos utilizando `\b`, y añadimos `[^t]` para indicar que no queremos que nos busque palabras que comiencen por t. Con el flag `-n` nos muestra el número de línea en el que está cada palabra que nos encuentra de acuerdo con el criterio establecido. Así podemos comprobar que nos da el resultado ordenado por filas. Adicionalmente, le agregamos a la expresión regular `\s` para que tenga en cuenta el espacio antes de la palabra y comience a buscar a partir de la primera letra.
 
-`grep -n -o -E -i '\b[^t][a-z]*s\b' aquella_voluntad.txt`
+`grep -n -o -E -i '\s\b[^t][a-zA-Z]*s\b' aquella_voluntad.txt`
 
-![palabras que no empiecen por t y acaben por s](https://user-images.githubusercontent.com/92091175/140642850-a79b4040-27a2-4bf2-82d3-cab38ac466df.png)
+
+![grep](https://user-images.githubusercontent.com/92113066/140740660-c345cdbe-5b6c-4efe-9092-bea3073732fe.png)
 
 
 ## Ejercicio 2
