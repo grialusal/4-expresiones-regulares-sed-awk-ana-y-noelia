@@ -82,6 +82,13 @@ Si volvemos a ejecutar `sort -nr`, podremos ver de un vistazo las referencias qu
 
 ![frecuencias geneid drosophila](https://user-images.githubusercontent.com/92091175/141675581-d56fd42f-7e64-4220-91a0-4c21d2bb0ee8.png)
 
+Ahora, con el archivo comprimido de Homo sapiens, utilizaremos el mismo pipeline pero con una modificación: usaremos `zgrep`:
+
+`zgrep -v "^#" Homo_sapiens.GRCh38.102.gtf.gz | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*[0]{3,}" | sort | uniq -c | sort -nr | head`
+
+
+![geneid homo sapiens](https://user-images.githubusercontent.com/92091175/141676645-3ae55f9f-8d45-4533-9fa3-9a06e7ab48a5.png)
+
 
 ## Ejercicio 3
 
