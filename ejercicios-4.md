@@ -67,6 +67,21 @@ Explora el fichero de anotaciones para ver si existen otros gene_ids con muchos 
 
 ### Respuesta ejercicio 2
 
+Para averiguar el número de `gene_id` con varios ceros seguidos en el fichero de Drosophila, hemos utilizado el siguiente pipeline:
+
+`grep -v "^#" Drosophila_melanogaster.BDGP6.28.102.gtf  | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*[0]{3,}" | wc -l`
+
+Con esto, le estamos diciendo a la shell que nos quite con `grep -v` los metadatos; posteriormente, con  `sed` hacemos que nos saque por pantalla únicamente las referencias de todos los `gene_id` y finalmente, con `grep` seleccionamos todas las referencias que contengan varios ceros (en nuestro caso, hemos entendido varios como 3 o más). Comprobamos con `head` que obtenemos lo que nos interesa y ejecutamos `wc -l` para responder a la primera pregunta: existen 56351 gene_id en el archivo Drosophila con 3 o más 0 seguidos.
+Para ver cuántas veces aparece cada uno, ejecutaremos `sort` y `uniq -c`:
+
+![geneid drosophila](https://user-images.githubusercontent.com/92091175/141675420-df088caa-6eee-4fae-b5bd-e40a1f7c6f31.png)
+
+Si volvemos a ejecutar `sort -nr`, podremos ver de un vistazo las referencias que aparecen más frecuentemente:
+
+`grep -v "^#" Drosophila_melanogaster.BDGP6.28.102.gtf  | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*[0]{3,}" | sort | uniq -c | sort -nr | head -n10`
+
+![frecuencias geneid drosophila](https://user-images.githubusercontent.com/92091175/141675581-d56fd42f-7e64-4220-91a0-4c21d2bb0ee8.png)
+
 
 ## Ejercicio 3
 
