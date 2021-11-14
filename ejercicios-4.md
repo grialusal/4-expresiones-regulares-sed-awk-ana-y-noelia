@@ -82,6 +82,12 @@ Si volvemos a ejecutar `sort -nr`, podremos ver de un vistazo las referencias qu
 
 ![frecuencias geneid drosophila](https://user-images.githubusercontent.com/92091175/141675581-d56fd42f-7e64-4220-91a0-4c21d2bb0ee8.png)
 
+Por otra parte, para buscar referencias de gene id con otros números repetidos varias veces, podemos añadir a nuestro pipeline el operador de alternancia OR `|`:
+
+`grep -v "^#" Drosophila_melanogaster.BDGP6.28.102.gtf  | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*(0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,})" | sort | uniq -c | sort -nr | head -n20`
+
+![otros numeros repetidos](https://user-images.githubusercontent.com/92091175/141678150-b49512a8-916d-4a1a-bc29-a0dca604ae0d.png)
+
 Ahora, con el archivo comprimido de Homo sapiens, utilizaremos el mismo pipeline pero con una modificación: usaremos `zgrep`:
 
 `zgrep -v "^#" Homo_sapiens.GRCh38.102.gtf.gz | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*[0]{3,}" | sort | uniq -c | sort -nr | head`
