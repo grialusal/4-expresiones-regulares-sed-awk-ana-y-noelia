@@ -103,6 +103,7 @@ Al final, para cada secuencia, imprimirá su nombre y el número de caracteres q
 
 ### Respuesta ejercicio 3
 
+En este caso trabajamos con el fichero fasta `covid_samples.fasta`. Primero para convertir este fichero sin saltos de linea empleamos la orden `cat covid-samples.fasta | tr -d '\n'`, con el flag `-d` indicamos que nos elimine los saltos de linea.
 
 ## Ejercicio 4
 En la sección 3.1., convertimos la cadena `chr1:3214482-3216968` a un formato tabular con `sed`. Sin embargo, existen otras maneras en las que podríamos haber obtenido el mismo resultado final. ¿Se te ocurren algunas? Recuerda que puedes usar el flag `g`, o puedes encadenar distintas llamadas a `sed` con tuberías si ves que meterlo todo en una única expresión regular se te antoja complicado. 
