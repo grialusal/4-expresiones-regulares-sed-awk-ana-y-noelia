@@ -103,3 +103,9 @@ En la sección 3.1., convertimos la cadena `chr1:3214482-3216968` a un formato t
 
 ### Respuesta ejercicio 4
 
+Como vimos en clase, con `sed` podemos hacer que nos sustituya los dos puntos y guiones por tabuladores con la orden: 
+
+`echo "chr1:3214482-3216968" | sed -E 's/[:-]/\t/g'`
+
+![formato tabular](https://user-images.githubusercontent.com/92091175/141677420-423efa8f-583e-435e-972f-0f5ff5db6508.png)
+
