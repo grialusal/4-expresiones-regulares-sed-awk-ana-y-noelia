@@ -60,6 +60,13 @@ Añadimos `-c`para saber el número total de líneas: 57 (casi la mitad que las 
 
 ![grep](https://user-images.githubusercontent.com/92113066/140740660-c345cdbe-5b6c-4efe-9092-bea3073732fe.png)
 
+**6.** Para encontrar las palabras que comienzan y terminan por la misma letra empleamos el comando 
+
+`grep -E -o -i '\b(^[a-z])[a-z]+\1\b' aquella_voluntad.txt` donde con `\1` hacemos referencia al grupo de captura `(^[a-z])` que indica la letra de inicio de la palabra.
+
+![grep3](https://user-images.githubusercontent.com/92113066/141787111-efba0c8c-f4b6-4a6a-835f-713de46da2bb.png)
+
+
 
 ## Ejercicio 2
 ¿Cuántos gene_ids existen con varios ceros seguidos en los dos gtfs (Humano y Drosophila)?. ¿Cuáles son? ¿Cuántas veces aparece cada uno en el .gtf dado?
