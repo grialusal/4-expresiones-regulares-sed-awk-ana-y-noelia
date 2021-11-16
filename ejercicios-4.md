@@ -89,11 +89,12 @@ Si volvemos a ejecutar `sort -nr`, podremos ver de un vistazo las referencias qu
 
 ![frecuencias geneid drosophila](https://user-images.githubusercontent.com/92091175/141675581-d56fd42f-7e64-4220-91a0-4c21d2bb0ee8.png)
 
-Por otra parte, para buscar referencias de gene id con otros números repetidos varias veces, podemos añadir a nuestro pipeline el operador de alternancia OR `|`:
+Por otra parte, para buscar referencias de gene id con otros números repetidos varias veces, podemos añadir a nuestro pipeline grupos de captura:
 
-`grep -v "^#" Drosophila_melanogaster.BDGP6.28.102.gtf  | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*(0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,})" | sort | uniq -c | sort -nr | head -n20`
+`grep -v "^#" Drosophila_melanogaster.BDGP6.28.102.gtf | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*([1-9])\1{3,}" | sort | uniq -c | sort -nr | head -n10`
 
-![otros numeros repetidos](https://user-images.githubusercontent.com/92091175/141678150-b49512a8-916d-4a1a-bc29-a0dca604ae0d.png)
+![otros numeros repetidos](https://user-images.githubusercontent.com/92091175/141968265-bf9ba26f-7629-4d97-b104-7fa0fe29fb73.png)
+
 
 Ahora, con el archivo comprimido de Homo sapiens, utilizaremos el mismo pipeline pero con una modificación: usaremos `zgrep`:
 
@@ -101,6 +102,19 @@ Ahora, con el archivo comprimido de Homo sapiens, utilizaremos el mismo pipeline
 
 
 ![geneid homo sapiens](https://user-images.githubusercontent.com/92091175/141676645-3ae55f9f-8d45-4533-9fa3-9a06e7ab48a5.png)
+
+Para variar, esta vez sacaremos el número de repeticiones añadiendo a `grep` el flag `-c`:
+
+![numero de referencias con ceros repetidos](https://user-images.githubusercontent.com/92091175/141970935-10ef682e-fe1f-4180-bacb-db51dcea362e.png)
+
+
+Lo mismo para buscar referencias con otros números repetidos:
+
+`zgrep -v "^#" Homo_sapiens.GRCh38.102.gtf.gz | sed -E -n 's/.*gene_id "([^"]+)".*/\1/p' | grep -E ".*([1-9])\1{2,}" | sort | uniq -c | sort -nr | head -n10`
+
+![secuencias repetidas en homo sapiens](https://user-images.githubusercontent.com/92091175/141969966-dc292714-b8fa-4ac2-90b6-db8bd831f7a4.png)
+
+
 
 
 ## Ejercicio 3
