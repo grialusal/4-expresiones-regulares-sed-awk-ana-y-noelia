@@ -115,8 +115,6 @@ Lo mismo para buscar referencias con otros números repetidos:
 ![secuencias repetidas en homo sapiens](https://user-images.githubusercontent.com/92091175/141969966-dc292714-b8fa-4ac2-90b6-db8bd831f7a4.png)
 
 
-
-
 ## Ejercicio 3
 
 Crea un pipeline que convierta un fichero fasta con secuencias partidas en múltiples líneas en otro sin saltos de línea. 
@@ -124,7 +122,28 @@ Al final, para cada secuencia, imprimirá su nombre y el número de caracteres q
 
 ### Respuesta ejercicio 3
 
-En este caso trabajamos con el fichero fasta `covid_samples.fasta`. Primero para convertir este fichero sin saltos de linea empleamos la orden `cat covid-samples.fasta | tr -d '\n'`, con el flag `-d` indicamos que nos elimine los saltos de linea.
+En este caso trabajamos con el fichero fasta `covid_samples.fasta`.
+
+Para contar el número de caracteres de cada secuencia hemos utilizado el siguiente pipeline:
+
+`cat covid-samples.fasta | tr -d '\n' | tr '>' '\n' | grep -Eo "[A-Z]{6,}" | awk '{print length}'`
+
+Estamos ejecutando `tr -d '\n'` todos los saltos de línea salvo los utilizados para dividir las cuatro secuencias (`tr '>' '\n'`). Posteriormente, con `grep -Eo "[A-Z]{6,}"` conseguimos que nos saque solo las secuencias sin los nombres, para obtener, con `awk '{print length}'` la longitud de cada una de las cuatro:
+
+![longitud de las secuencias](https://user-images.githubusercontent.com/92091175/142162472-ed907491-4322-4dc2-a7b6-3534d6b3d19b.png)
+
+Para imprimir tanto el nombre como el número de caracteres de las secuencias, no se nos ha ocurrido nada salvo utilizar `echo` para sacar por pantalla el resultado de dos pipelines: 
+El primero, para obtener los nombres de cada secuencia, es similar al que hemos visto salvo por el uso de `grep` para filtrar los nombres de las secuencias (sabemos que cada nombre empieza por mayúscula y termina en minúscula):
+
+`cat covid-samples.fasta | tr -d '\n' | tr '>' '\n' | grep -Eo "^[A-Z].+[a-z]"`
+
+![nombres de secuencias](https://user-images.githubusercontent.com/92091175/142166089-42a33e5e-d26c-48b9-ac5d-2e2b7adf598b.png)
+
+Y el segundo, que es el que hemos visto al principio. Al juntarlos con `echo`:
+
+![nombres y longitud de secuencias](https://user-images.githubusercontent.com/92091175/142168971-05e652b6-c289-4baf-bb00-d07329a8a1a9.png)
+
+
 
 ## Ejercicio 4
 En la sección 3.1., convertimos la cadena `chr1:3214482-3216968` a un formato tabular con `sed`. Sin embargo, existen otras maneras en las que podríamos haber obtenido el mismo resultado final. ¿Se te ocurren algunas? Recuerda que puedes usar el flag `g`, o puedes encadenar distintas llamadas a `sed` con tuberías si ves que meterlo todo en una única expresión regular se te antoja complicado. 
